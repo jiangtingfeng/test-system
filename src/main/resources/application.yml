@@ -1,0 +1,47 @@
+server:
+  port: 30004
+  ssl:
+    enabled: false
+    error:
+      whitelabel:
+        enabled: false
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+  application:
+    name: test_system_dev
+  datasource:
+    dynamic:
+      druid:
+        initial-size: 5
+        min-idle: 5
+        max-active: 2000
+        max-wait: 600000
+        time-between-eviction-runs-millis: 60000
+        min-evictable-idle-time-millis: 300000
+        validation-query: SELECT 1 FROM DUAL
+        test-while-idle: true
+        test-on-borrow: false
+        test-on-return: false
+      primary: master #����Ĭ�ϵ�����Դ��������Դ��,Ĭ��ֵ��Ϊmaster
+      datasource:
+        master: #�����Ʊ���̶�Ϊmaster,����Ὣ������Դ����ҵ������·������Դ��
+          username: root
+          password: root
+          driver-class-name: com.mysql.jdbc.Driver
+          url: jdbc:mysql://127.0.0.1:3306/t_test_system?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
+  redis:
+    database: 1
+    host: 127.0.0.1
+    port: 6379
+    password:
+    timeout: 3000
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+swagger2:
+  enable: 1
+

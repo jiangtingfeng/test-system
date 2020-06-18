@@ -1,0 +1,13 @@
+.selectbtn{
+	margin:  auto;
+	width: 800px;
+}
+.selectbtn button{
+	width: 100px;
+	margin: 100px auto;
+	border-style: solid;
+	border-width: thin;
+	border-color: aliceblue;
+	border-color: azure;
+	font-size: xx-large;
+}

@@ -1,0 +1,20 @@
+.Testbtn{
+	margin:auto;
+	width: 500px;
+}
+.Testbtn button{
+	width:150px;
+	margin: 80px auto;
+	border-style: solid;
+	border-width: thin;
+	border-color: aliceblue;
+	border-color: azure;
+	font-size: xx-large;
+}
+.TestButton{
+	width: 50%;
+	float: left;
+	margin: auto;
+	display: block;
+	text-align: center;
+}

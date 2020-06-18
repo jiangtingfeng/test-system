@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}"/>
+		<script type="application/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+		<script type="application/javascript" th:src="@{/webjars/bootstrap/3.1.1/js/bootstrap.js}"></script>
+		<title>开始测试</title>
+		<script>
+			function startTest() {
+				location='/test_system/api/v1/selectGroup/startTest?number=0&type=1';
+			}
+		</script>
+	</head>
+	<body class="fontstyle">
+		<div class="bckDiv" >
+			<p th:text="${msg}"></p>
+			<p>在开始实验之前请认真阅读以下指导语:</p>
+			<p>接下来请认真记住屏幕上所呈现的每张图片，图片消失后点击按钮查看下一张</p>
+			<div class="btn">
+				<button type="button" class="button" onclick="startTest()">开始实验</button>
+			</div>
+		</div>
+	</body>
+</html>

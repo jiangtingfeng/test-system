@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}"/>
+		<script type="application/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+		<script type="application/javascript" th:src="@{/webjars/bootstrap/3.1.1/js/bootstrap.js}"></script>
+		<title></title>
+	</head>
+	<script>
+		$(function () {
+			$("#start").click(function () {
+				var name = $('input[id=name]').val()
+				var age = $('input[id=age]').val();
+				var sex = $('input[id=sex]').val();
+				if (name.length == 0 || age.length == 0 || sex.length == 0) {
+					alert("请输入完整的信息！");
+				} else {
+					var param = {
+						'name': name,
+						'age': age,
+						'sex': sex
+					};
+					$.ajax({
+						type: 'post',
+						dataType: 'json',
+						contentType: 'application/json',
+						url: '/test_system/api/v1/user/add',
+						data: JSON.stringify(param),
+						success : function(result) {
+							if (result.state == 200) {
+								location = "/test_system/api/v1/user/selectTrail";
+ 							}else {
+								location = "/test_system/api/v1/user/error";
+							}
+						}
+					});
+				}
+			});
+		});
+
+	</script>
+	<body class="fontstyle">
+		<div class="bckDiv" >
+			<div >
+				<p>欢迎参加本次的实验</p>
+				<p>
+					
+				</p>
+				<p>在实验开始之前，请仔细阅读以下指导语：</p>
+				<p>
+					
+				</p>
+				<p>在学习阶段，屏幕将会呈现750张图片，你的任务是尽量记住出现的图片
+				<p>
+					
+				</p>
+				(注意！)只能用脑子记，不允许使用纸笔等其他记录工具
+				<p>
+					
+				</p>
+				请输入个人信息后点击按钮开始试验</p>
+			</div>
+			<div >
+				<div class="input" >
+					<span class="sp">姓名: </span><input type="text" id="name" class="shurukuang" />
+				</div>
+				
+				<div class="input">
+					<span class="sp" >年龄: </span><input type="text" id="age"  class="shurukuang" />
+				</div>
+				
+				<div class="input">
+					<span class="sp">性别: </span><input type="text" id="sex"  class="shurukuang" />
+				</div>
+				<div class="btn">
+						<button  type="button" class="button" style="size: auto;" id="start"><font size="6">开始实验</font></button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

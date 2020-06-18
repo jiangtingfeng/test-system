@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
+		<script type="application/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+		<script type="application/javascript" th:src="@{/webjars/bootstrap/3.1.1/js/bootstrap.js}"></script>
+		<title>测试中...</title>
+		<script>
+			var startDate = new Date();
+			var endTime = new Date();
+			var imageStr = "";
+			var timeout;
+			$(function () {
+				//timeout = setTimeout(changeimg, 3000);
+			});
+			function changeimg() {
+				imageStr = $("#image").attr("src");
+				$("#image").attr("src","");
+				startDate = new Date();
+			}
+			function next() {
+				//clearTimeout(timeout);
+				//timeout = setTimeout(changeimg, 3000);
+				endTime = new Date();
+				var src = $("#image").attr("src");
+				var userId = $("input[ name='userId']").val();
+				var number = $("input[name='number']").val();
+				number = parseInt(number)+1;
+				//记下图片变白到用户点击图片的时间
+				if (/*src.length == 0*/true) {
+					var time = endTime-startDate;
+					var param = {
+						'imageUrl': imageStr,
+						'learnTime': time,
+						'number': number,
+						'type': 1,
+						'userId': userId
+					};
+					//将用户的学习图片时间和响应的图片Id保存入库
+					$.ajax({
+						type: 'post',
+						dataType: 'json',
+						contentType: 'application/json',
+						url: '/test_system/api/v1/selectGroup/next',
+						data: JSON.stringify(param),
+						success : function(result) {
+							if (result.state == 200) {
+								var li = '<div class="picture" id="pic">' +
+										'   <img th:src="@{${'+result.results.imageUrl+'}}" id="image"/>' +
+										'</div>' +
+										'<div class="btn">' +
+										'      <input th:value="'+result.results.userId+'" hidden="hidden" name="userId"/>' +
+										'      <input th:value="'+result.results.number+'" hidden="hidden" name="number"/>' +
+										'      <button type="button" class="button" onclick="next()"><a href="javascript:void(0)" style="text-decoration: none">下一张</a></button>' +
+										'</div>';
+								$("#testBox").html(li);
+							}
+						}
+					});
+				}
+			}
+		</script>
+	</head>
+	<body class="fontstyle">
+	<div id="testBox">
+		<div class="picture" id="pic">
+			<img th:src="@{${objString.imageUrl}}" id="image"/>
+		</div>
+		<div class="btn">
+			<input th:value="${objString.userId}" hidden="hidden" name="userId"/>
+			<input th:value="${objString.number}" hidden="hidden" name="number"/>
+			<button type="button" class="button" onclick="next()"><a href="javascript:void(0)" style="text-decoration: none">下一张</a></button>
+		</div>
+	</div>
+	</body>
+</html>
