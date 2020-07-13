@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学习图片阶段...</title>
+    <link rel="stylesheet" type="text/css" th:href="@{../css/layout.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{../css/TestStage.css}" />
+    <link th:href="@{../css/bootstrap.css}" rel="stylesheet">
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script th:src="@{../js/jquery-3.3.1.js}"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script th:src="@{../js/bootstrap.js}"></script>
+    <script>
+        var startDate = new Date();
+        var endTime = new Date();
+        var timeArray = new Array();
+        var answerArray = new Array();
+        var i = 1;
+        function next(a) {
+            endTime = new Date();
+            var time = endTime-startDate;
+            timeArray.push(time);
+            var value = $(a).text();
+            answerArray.push(value);
+            var b = '#' + i + '';
+            $(b).css("display", "none");
+            var c = '#' + (i + 1) + '';
+            $(c).css("display", "block");
+            i++;
+            startDate = new Date();
+            //提交请求
+            if (i == 211) {
+                $.ajax({
+                        type: 'post',
+                        url: '/test_system/api/v1/selectGroup/saveTestTime',
+                        data: {timeList: timeArray,answerList: answerArray},
+                        traditional: true
+                    }
+                );
+                location = "/test_system/api/v1/selectGroup/end";
+            }
+        }
+    </script>
+</head>
+<body class="fontstyle">
+<div th:id="${objString.get(0).number}">
+    <div class="picture">
+        <img th:src="@{../{imgUrl}(imgUrl=${objString.get(0).imageUrl})}" name="image" width="500px" height="400px"/>
+    </div>
+    <div class="Testbtn">
+        <div class="TestButton">
+            <button type="button" class="button" onclick="next(this)">是</button>
+        </div>
+        <div class="TestButton">
+            <button type="button" class="button" onclick="next(this)">否</button>
+        </div>
+    </div>
+</div>
+<div th:each="s : ${objString}" th:if="${s.number != 1}">
+    <div th:id="${s.number}" style="display: none">
+        <div class="picture">
+            <img th:src="@{../{imgUrl}(imgUrl=${s.imageUrl})}" name="image" width="500px" height="400px"/>
+        </div>
+        <div class="Testbtn">
+            <div class="TestButton">
+                <button type="button" class="button" onclick="next(this)">是</button>
+            </div>
+            <div class="TestButton">
+                <button type="button" class="button" onclick="next(this)">否</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

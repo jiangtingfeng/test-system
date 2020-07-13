@@ -6,9 +6,12 @@ server:
       whitelabel:
         enabled: false
 spring:
+  messages:
+    basename: i18n.index
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
+    cache: false
   application:
     name: test_system_dev
   datasource:
@@ -24,24 +27,19 @@ spring:
         test-while-idle: true
         test-on-borrow: false
         test-on-return: false
-      primary: master #����Ĭ�ϵ�����Դ��������Դ��,Ĭ��ֵ��Ϊmaster
+      primary: master
       datasource:
-        master: #�����Ʊ���̶�Ϊmaster,����Ὣ������Դ����ҵ������·������Դ��
+        master:
           username: root
           password: root
           driver-class-name: com.mysql.jdbc.Driver
           url: jdbc:mysql://127.0.0.1:3306/t_test_system?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
-  redis:
-    database: 1
-    host: 127.0.0.1
-    port: 6379
-    password:
-    timeout: 3000
-    pool:
-      max-active: 8
-      max-wait: -1
-      max-idle: 8
-      min-idle: 0
 swagger2:
   enable: 1
-
+log4j:
+  logger:
+    freemarker:
+      cache: ERROR
+      beans: ERROR
+web:
+  destPath: /html

@@ -1,13 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="css/layout.css" />
-		<title></title>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}"/>
+		<script type="application/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+		<script type="application/javascript" th:src="@{/webjars/bootstrap/3.1.1/js/bootstrap.js}"></script>
+		<title>休息15分钟...</title>
+		<script type="text/javascript">
+			var m=14;
+			var s=59;
+			var interval;
+			$(function(){
+				interval = setInterval(count,1000);
+			});
+			function count(){
+				if(s<10 && m>=0){
+					//如果秒数少于10在前面加上0
+					$('#time').html(m+':0'+s);
+				}else{
+					$('#time').html(m+':'+s);
+				}
+				s--;
+				if(s<0){
+					//如果秒数少于0就变成59秒
+					s=59;
+					m--;
+				}
+				if (m<0) {
+					clearInterval(interval);
+					$("#time").css("display","none");
+					//跳转
+					location="/html/"+ '[[${htmlName}]]';
+				}
+			}
+		</script>
 	</head>
 	<body class="fontstyle">
 		<div class="bckDiv"  style="margin-top: 200px; text-align: center;">
-			<p>休息15分钟再继续，请不要离开此页面哦~</p>	
+			<p>休息15分钟再继续，请不要离开此页面哦~</p>
+			<p id="time">15:00</p>
 		</div>
 	</body>
 </html>

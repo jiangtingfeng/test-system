@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <meta charset="UTF-8">
+    <title>导出数据</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}"/>
+    <script type="application/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+    <script type="application/javascript" th:src="@{/webjars/bootstrap/3.1.1/js/bootstrap.js}"></script>
+    <script>
+        function download(a) {
+            location="/excel/get?type="+a;
+        }
+    </script>
+</head>
+<body>
+<div style="width: 600px;margin-left: 200px;margin-top: 100px">
+    <!--<div class="btn">
+        <button class="btn btn-default" onclick="download(1)" style="width: 500px">导出用户信息</button>
+    </div>
+    <div class="btn">
+        <button class="btn btn-default" onclick="download(2)" style="width: 500px">导出用户学习和测试图片名称</button>
+    </div>
+    <div class="btn">
+        <button class="btn btn-default" onclick="download(3)" style="width: 500px">导出用户学习每张图片的时间</button>
+    </div>
+    <div class="btn">
+        <button class="btn btn-default" onclick="download(4)" style="width: 500px">导出用户测试每张图片的时间</button>
+    </div>
+    <div class="btn">
+        <button class="btn btn-default" onclick="download(5)" style="width: 500px">导出用户测试结果数据-正确图片（正确率）</button>
+    </div>
+    <div class="btn">
+        <button class="btn btn-default" onclick="download(6)" style="width: 500px">导出用户测试结果数据-错误图片（正确率）</button>
+    </div>-->
+    <div class="btn">
+        <button class="btn btn-default" onclick="download(7)" style="width: 500px">总表</button>
+    </div>
+    <div class="btn">
+        <button class="btn btn-default" onclick="download(8)" style="width: 500px">每个被试的学习阶段分表</button>
+    </div>
+    <div class="btn">
+        <button class="btn btn-default" onclick="download(9)" style="width: 500px">每个被试的测试阶段分表</button>
+    </div>
+</div>
+</body>
+</html>

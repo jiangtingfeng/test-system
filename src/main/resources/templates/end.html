@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8">
-		<link rel="stylesheet" type="text/css" href="css/layout.css" />
-		<title></title>
+		<link rel="stylesheet" type="text/css" th:href="@{/css/layout.css}" />
+		<script type="application/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.js}"></script>
+		<script type="application/javascript" th:src="@{/webjars/bootstrap/3.1.1/js/bootstrap.js}"></script>
+		<title>实验结束...</title>
 	</head>
-	<body class="fontstyle">>
+	<body class="fontstyle">
 		<div class="bckDiv"  style="margin-top: 200px; text-align: center;">
-			<p>实验结束，感谢您的参与！</p>	
-		
+			<p>实验结束，感谢您的参与！</p>
+		</div>
 	</body>
 </html>

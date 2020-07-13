@@ -3,14 +3,20 @@
 	<head>
 		<meta charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="css/layout.css" />
-		<title></title>
+		<title>准备实验...</title>
+		<script>
+			function startTest() {
+				location='/test_system/api/v1/selectGroup/startTestPartTwo';
+			}
+		</script>
 	</head>
-	<body class="fontstyle">>
-		<div class="bckDiv" >
+	<body class="fontstyle">
+		<div class="bckDiv" style="margin-top: 150px">
 			<p>在开始实验之前请认真阅读以下指导语:</p>
-			<p>接下来请判断屏幕中出现的图片是否见过，如果见过，就点击是；没有见过，就点击否</p>
+			<p style="margin-left: 60px;color: brown">接下来请判断屏幕中出现的图片是否见过，如果见过，就点击是；没有见过，就点击否。</p>
 		<div class="btn">
-			<button type="button" class="button">开始实验</button>
+			<button type="button" class="button" onclick="startTest()">开始实验</button>
+		</div>
 		</div>
 	</body>
 </html>

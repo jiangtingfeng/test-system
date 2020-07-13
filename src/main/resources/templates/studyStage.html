@@ -9,68 +9,61 @@
 		<script>
 			var startDate = new Date();
 			var endTime = new Date();
-			var imageStr = "";
-			var timeout;
+			var timeArray = new Array();
+			var i = 1;
 			$(function () {
-				//timeout = setTimeout(changeimg, 3000);
+				setTimeout(changeimg,3000);
 			});
 			function changeimg() {
-				imageStr = $("#image").attr("src");
-				$("#image").attr("src","");
+				$(".picture").css("display", "none");
 				startDate = new Date();
 			}
 			function next() {
-				//clearTimeout(timeout);
-				//timeout = setTimeout(changeimg, 3000);
-				endTime = new Date();
-				var src = $("#image").attr("src");
-				var userId = $("input[ name='userId']").val();
-				var number = $("input[name='number']").val();
-				number = parseInt(number)+1;
-				//记下图片变白到用户点击图片的时间
-				if (/*src.length == 0*/true) {
+				if ($(".picture").css("display") == "block") {
+				}else {
+					endTime = new Date();
 					var time = endTime-startDate;
-					var param = {
-						'imageUrl': imageStr,
-						'learnTime': time,
-						'number': number,
-						'type': 1,
-						'userId': userId
-					};
-					//将用户的学习图片时间和响应的图片Id保存入库
-					$.ajax({
-						type: 'post',
-						dataType: 'json',
-						contentType: 'application/json',
-						url: '/test_system/api/v1/selectGroup/next',
-						data: JSON.stringify(param),
-						success : function(result) {
-							if (result.state == 200) {
-								var li = '<div class="picture" id="pic">' +
-										'   <img th:src="@{${'+result.results.imageUrl+'}}" id="image"/>' +
-										'</div>' +
-										'<div class="btn">' +
-										'      <input th:value="'+result.results.userId+'" hidden="hidden" name="userId"/>' +
-										'      <input th:value="'+result.results.number+'" hidden="hidden" name="number"/>' +
-										'      <button type="button" class="button" onclick="next()"><a href="javascript:void(0)" style="text-decoration: none">下一张</a></button>' +
-										'</div>';
-								$("#testBox").html(li);
+					timeArray.push(time);
+					var b = '#' + i + '';
+					$(b).css("display", "none");
+					var c = '#' + (i + 1) + '';
+					$(c).css("display", "block");
+					$(".picture").css("display", "block");
+					setTimeout(changeimg,3000);
+					i++;
+					//进行异步提交时间
+					if(i==751) {
+						//进行异步请求
+						$.ajax({
+							type: 'post',
+							url: '/test_system/api/v1/selectGroup/saveLearnTime',
+							data: {timeList:timeArray},
+							traditional:true
 							}
-						}
-					});
+						);
+						location="/relaxing.html";
+					}
 				}
 			}
 		</script>
 	</head>
 	<body class="fontstyle">
-	<div id="testBox">
-		<div class="picture" id="pic">
-			<img th:src="@{${objString.imageUrl}}" id="image"/>
+	<div th:id="${objString.get(0).number}">
+		<div class="picture">
+			<img th:src="@{${objString.get(0).imageUrl}}" name="image" width="500px" height="400px"/>
 		</div>
 		<div class="btn">
-			<input th:value="${objString.userId}" hidden="hidden" name="userId"/>
-			<input th:value="${objString.number}" hidden="hidden" name="number"/>
-			<button type="button" class="button" onclick="next()"><a href="javascript:void(0)" style="text-decoration: none">下一张</a></button>
+			<button type="button" th:value="${objString.get(0).number}" style="position: fixed;margin-left: 350px;margin-top: 550px" class="button" onclick="next()">下一张</button>
+		</div>
+	</div>
+	<div th:each="s : ${objString}" th:if="${s.number != 1}">
+		<div th:id="${s.number}" style="display: none">
+			<div class="picture">
+				<img th:src="@{${s.imageUrl}}" name="image" width="500px" height="400px"/>
+			</div>
+			<div class="btn">
+				<button type="button" class="button" style="position: fixed;margin-left: 350px;margin-top: 550px" onclick="next()">下一张</button>
+			</div>
 		</div>
 	</div>
 	</body>

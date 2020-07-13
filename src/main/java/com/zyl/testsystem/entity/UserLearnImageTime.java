@@ -38,6 +38,9 @@ public class UserLearnImageTime implements Serializable {
     @ApiModelProperty(value = "学习时长单位毫秒")
     private String learnTime;
 
+    @ApiModelProperty(value = "1:学习阶段；2:测试阶段")
+    private Integer type;
+
     @ApiModelProperty(value = "创建时间")
     @TableField(value = "create_time",fill = FieldFill.INSERT)
     private LocalDateTime createTime;

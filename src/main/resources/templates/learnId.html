@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>学习图片阶段...</title>
+    <link rel="stylesheet" type="text/css" th:href="@{../css/layout.css}" />
+    <link th:href="@{../css/bootstrap.css}" rel="stylesheet">
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script th:src="@{../js/jquery-3.3.1.js}"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script th:src="@{../js/bootstrap.js}"></script>
+    <script>
+        var startDate = new Date();
+        var endTime = new Date();
+        var timeArray = new Array();
+        var i = 1;
+        $(function () {
+            setTimeout(changeimg,3000);
+        });
+        function changeimg() {
+            $(".picture").css("display", "none");
+            startDate = new Date();
+        }
+        function next() {
+            if ($(".picture").css("display") == "block") {
+            }else {
+                endTime = new Date();
+                var time = endTime-startDate;
+                timeArray.push(time);
+                var b = '#' + i + '';
+                $(b).css("display", "none");
+                var c = '#' + (i + 1) + '';
+                $(c).css("display", "block");
+                $(".picture").css("display", "block");
+                setTimeout(changeimg,3000);
+                i++;
+                //进行异步提交时间
+                if(i==5) {
+                    //进行异步请求
+                    $.ajax({
+                            type: 'post',
+                            url: '/test_system/api/v1/selectGroup/saveLearnTime',
+                            data: {timeList:timeArray},
+                            traditional:true
+                        }
+                    );
+                    location="/test_system/api/v1/selectGroup/relaxing";
+                }
+            }//sudo /etc/init.d/tomcat8 restart
+        }
+    </script>
+</head>
+<body class="fontstyle">
+<div th:id="${objString.get(0).number}">
+    <div class="picture">
+        <img th:src="@{../{imgUrl}(imgUrl=${objString.get(0).imageUrl})}" name="image" width="500px" height="400px"/>
+    </div>
+    <div class="btn">
+        <button type="button" th:value="${objString.get(0).number}" style="position: fixed;margin-left: 350px;margin-top: 550px" class="button" onclick="next()">下一张</button>
+    </div>
+</div>
+<div th:each="s : ${objString}" th:if="${s.number != 1}">
+    <div th:id="${s.number}" style="display: none">
+        <div class="picture">
+            <img th:src="@{../{imgUrl}(imgUrl=${s.imageUrl})}" name="image" width="500px" height="400px"/>
+        </div>
+        <div class="btn">
+            <button type="button" class="button" style="position: fixed;margin-left: 400px;margin-top: 550px" onclick="next()">下一张</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>
